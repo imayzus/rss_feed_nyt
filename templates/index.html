@@ -1,0 +1,216 @@
+{% extends 'base.html' %} {% block Feed %}
+    <div class="card">
+        <div class="header">
+            <ul>
+                <li id="header-date-left"><span class="css-1j88qqx e15t083i0">{{current_date}}</span></li>
+                <li id="header-center"><span class="css-1j88qqx e15t083i0">The New York Times</span></li>
+                {% if language == 'ENG'  %}
+                    <li id="header-language-right"><a href="{{base_url}}?language=ENG"><span class="css-1n7hynb" style="font-weight:bold">ENG</span></a> \ <a href="{{base_url}}?language=ESP"><span class="css-1n7hynb">ESP</span></a></li>
+                {% endif %}
+                {% if language == 'ESP'  %}
+                    <li id="header-language-right"><a href="{{base_url}}?language=ENG"><span class="css-1n7hynb">ENG</span></a> \ <a href="{{base_url}}?language=ESP"><span class="css-1n7hynb"  style="font-weight:bold">ESP</span></a></li>
+                {% endif %}
+            </ul>
+            <br><hr><br>
+
+        </div>
+
+        <div id="content">
+            {% for articles in articles_data %}
+                {% for article in articles %}
+                    <div class="css-14ee9cx">
+                        <article class="css-1l4spti">
+                            <a class="css-8hzhxf" href="{{article.get('link')}}" target="_blank">
+
+                            <div class="css-agsgss e15t083i3"><span class="" data-testid="todays-date">{{article.get('published_date')}}</span></div>
+
+                            {% if article.get('media_content') != None  %}
+                                <figure class="css-8izaxg" aria-label="media" role="group">
+                                    <img src="{{article.get('media_content')[0]['url']}}">
+                                </figure>
+                            {% endif %}
+
+                            <h3 class="css-1j88qqx e15t083i0">{{article.get('title')}}</h3>
+                            <p class="css-1pga48a e15t083i1">{{article.get('summary')}} </p>
+
+                            <p class="css-1pga48a e15t083i1">By <span class="css-1n7hynb">{{article.get('author')}}</span></p>
+
+                            </a>
+                            <br><hr><br>
+                        </article>
+                    </div>
+                {% endfor %}
+                <br><hr><br>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Styling for webpage -->
+    <style>
+        img {
+            width: 160px;
+            height: 110px;
+        }
+        a {
+            color: black;
+            text-decoration: none;
+        }
+        .card {
+            margin: 0 20rem;
+            margin-bottom: 3rem;
+            text-decoration: none;
+        }
+
+        @media screen and (max-width: 1400px) {
+            .card {
+                margin: 0 10rem;
+                margin-bottom: 2rem;
+            }
+        }
+
+        @media screen and (max-width: 900px) {
+            .card {
+                margin: 0 5rem;
+                margin-bottom: 1.5rem;
+            }
+        }
+
+        .card h3{
+            font-size: 1.5rem
+        }
+
+
+        @media (min-width: 600px) {
+            .css-14ee9cx {
+                -webkit-align-self: flex-start;
+                -ms-flex-item-align: start;
+                align-self: flex-start;
+                -webkit-flex-direction: row;
+                -ms-flex-direction: row;
+                flex-direction: row;
+                max-width: 840px;
+            }
+        }
+
+        @media (min-width: 600px) {
+            .css-1l4spti {
+                margin-bottom: 0;
+                -webkit-order: 2;
+                -ms-flex-order: 2;
+                order: 2;
+            }
+        }
+        .css-1l4spti {
+            margin-bottom: 2px;
+            -webkit-order: 0;
+            -ms-flex-order: 0;
+            order: 0;
+            width: 100%;
+        }
+
+        article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary, main {
+            display: block;
+        }
+
+        @media (min-width: 1024px) {
+            .css-8izaxg {
+                width: 205px;
+            }
+        }
+        @media (min-width: 600px) {
+            .css-8izaxg {
+                margin: 0 0 0 40px;
+            }
+        }
+        .css-8izaxg {
+            position: relative;
+            float: right;
+            margin: 0 0 10px 10px;
+            width: 150px;
+        }
+
+        @media (min-width: 740px) {
+            .css-1pga48a {
+                font-size: 14px;
+                line-height: 20px;
+            }
+        }
+        .css-1pga48a {
+            color: var(--color-content-secondary, #363636);
+            font-family: nyt-imperial, georgia, 'times new roman', times, serif;
+            font-weight: 400;
+            font-size: 13px;
+            line-height: 18px;
+        }
+
+
+        .css-1n7hynb {
+            text-transform: uppercase;
+        }
+
+
+        @media (min-width: 740px) {
+            .css-agsgss {
+                margin: 8px 0 7px;
+            }
+        }
+        @media (min-width: 600px) {
+            .css-agsgss {
+                min-width: 125px;
+                -webkit-order: 1;
+                -ms-flex-order: 1;
+                order: 1;
+            }
+        }
+
+        .css-agsgss {
+            -webkit-order: 0;
+            -ms-flex-order: 0;
+            order: 0;
+            color: var(--color-content-quaternary, #727272);
+            font-family: nyt-franklin, helvetica, arial, sans-serif;
+            font-size: 11px;
+            font-weight: 400;
+            line-height: 13px;
+        }
+
+
+        .css-79elbk {
+            position: relative;
+        }
+
+        .header {
+            position: sticky;
+            top: 0;
+            display: block;
+        }
+
+        .header ul {
+            display: inline-block;
+            padding: 0;
+            width:100%;
+        }
+
+        .header > ul > li {
+            display: inline-block;
+            position:relative;
+            vertical-align:top;
+            width: 30%;
+        }
+
+        #header-date-left {
+            text-align: left;
+        }
+
+        #header-language-right {
+           text-align: right;
+        }
+
+        #header-center {
+            text-align: center;
+        }
+
+
+    </style>
+
+{% endblock Feed %}
