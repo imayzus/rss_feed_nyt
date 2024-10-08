@@ -16,3 +16,4 @@ uvicorn
 cachetools
 pytest
 ddt
+mock
