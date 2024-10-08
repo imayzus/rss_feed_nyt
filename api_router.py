@@ -7,9 +7,9 @@ import cachetools.func
 import logging
 from typing import Optional
 from utils import get_cache_ttl_minutes, get_short_date, get_current_date, get_base_url
+from log import default_logger
 
-
-logger = logging.getLogger(__name__)
+logger = default_logger(__name__)
 
 router = APIRouter()
 
@@ -18,7 +18,7 @@ templates = Jinja2Templates(directory='templates')
 
 @cachetools.func.ttl_cache(maxsize=None, ttl=get_cache_ttl_minutes() * 60)
 def fetch_feed_data(url: str) -> list:
-    print("getting data from feedparser")
+    logger.info("getting data from feedparser")
     return feedparser.parse(url)['entries']
 
 

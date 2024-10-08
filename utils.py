@@ -17,7 +17,7 @@ def get_cache_ttl_minutes() -> int:
 
 
 def get_short_date(published_date: str) -> str:
-    """ transform a string like 'Tue, 01 Oct 2024 18:11:43 +0000' into 'Oct. 3, 2024' """
+    """ transform a string like 'Tue, 01 Oct 2024 18:11:43 +0000' into 'Oct. 01, 2024' """
     tokens = published_date.split()
     date_short_format = f"{tokens[2]}. {tokens[1]}, {tokens[3]}"
     return date_short_format
@@ -38,5 +38,6 @@ def get_current_port() -> int:
     return get_config()['port']
 
 
-def get_base_url() -> str:
-    return f'http://{get_current_host()}:{get_current_port()}'
+def get_base_url(use_ssl=False) -> str:
+    return f'http://{get_current_host()}:{get_current_port()}' if not use_ssl else \
+        f'https://{get_current_host()}:{get_current_port()}'

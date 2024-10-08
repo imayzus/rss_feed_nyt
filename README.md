@@ -10,3 +10,6 @@ http://localhost:5000?language=ENG
 http://localhost:5000?language=ESP
 
 This implementation caches the feed for 15 minutes, which is also configured in config.json.
+
+To run tests:
+python -m unittest rss_feed_nyt/tests/test_utils.py
