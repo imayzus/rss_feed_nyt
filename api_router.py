@@ -3,8 +3,12 @@ from starlette.templating import Jinja2Templates
 import feedparser
 import cachetools.func
 from typing import Optional
-from utils import get_cache_ttl_minutes, get_short_date, get_current_date, get_base_url
+import utils
+from utils import (get_cache_ttl_minutes, get_short_date, get_current_date,
+                   get_base_url, get_result_data)
 from log import default_logger
+from models import Result
+
 
 logger = default_logger(__name__)
 
@@ -34,3 +38,12 @@ def index(request: Request, language: Optional[str] = 'ENG'):
     return templates.TemplateResponse(request, name='index.html',
                                       context={'articles_data': data, 'current_date': get_current_date(),
                                                'language': language, 'base_url': get_base_url(use_ssl=False)})
+
+
+@router.get('/result', status_code=status.HTTP_200_OK)
+def fetch_genes_result(request: Request):
+    data = get_result_data()
+    result = Result(result=data)
+    result_by_category = utils.break_into_categories(result.result)
+    utils.sort_four_categories(result_by_category)
+    return result_by_category
