@@ -38,6 +38,6 @@ def get_current_port() -> int:
     return get_config()['port']
 
 
-def get_base_url(use_ssl=False) -> str:
+def get_base_url(use_ssl) -> str:
     return f'http://{get_current_host()}:{get_current_port()}' if not use_ssl else \
         f'https://{get_current_host()}:{get_current_port()}'

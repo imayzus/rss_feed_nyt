@@ -1,10 +1,7 @@
 from fastapi import APIRouter, status, Request
-# from fastapi.responses import HTMLResponse
 from starlette.templating import Jinja2Templates
 import feedparser
-# from functools import lru_cache
 import cachetools.func
-import logging
 from typing import Optional
 from utils import get_cache_ttl_minutes, get_short_date, get_current_date, get_base_url
 from log import default_logger
@@ -33,6 +30,7 @@ def index(request: Request, language: Optional[str] = 'ENG'):
         if article.get('published'):
             article['published_date'] = get_short_date(article['published'])
 
+    # switch to use_ssl=True to use https://localhost:port or leave as False to use http://
     return templates.TemplateResponse(request, name='index.html',
                                       context={'articles_data': data, 'current_date': get_current_date(),
-                                               'language': language, 'base_url': get_base_url()})
+                                               'language': language, 'base_url': get_base_url(use_ssl=False)})
